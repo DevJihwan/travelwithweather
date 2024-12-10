@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 import { DateRange } from '@/components/TravelWeatherPlanner/types';
 
 type CalendarProps = {
-  selectedRange?: DateRange; // 선택적 속성
+  selectedRange?: DateRange;
   onSelect: (date: Date) => void;
 };
 
@@ -49,9 +49,9 @@ const Calendar: React.FC<CalendarProps> = ({ selectedRange, onSelect }) => {
   const isEnd = (date: Date) => selectedRange?.end ? isSameDay(date, selectedRange.end) : false;
 
   return (
-    <div className="grid grid-cols-7 gap-1 p-4 bg-white shadow rounded-md">
+    <div className="grid grid-cols-7 gap-1 p-4 bg-terminal-bg text-terminal-text rounded-md shadow-lg font-mono">
       {['일', '월', '화', '수', '목', '금', '토'].map((day) => (
-        <div key={day} className="text-center font-semibold text-gray-700">
+        <div key={day} className="text-center font-semibold text-terminal-accent">
           {day}
         </div>
       ))}
@@ -65,15 +65,15 @@ const Calendar: React.FC<CalendarProps> = ({ selectedRange, onSelect }) => {
 
         return (
           <button
-            type="button" // 필수: 버튼 타입을 명시적으로 "button"으로 설정
+            type="button"
             key={date.toISOString()}
             onClick={() => onSelect(date)}
             className={cn(
-              'p-2 rounded-md hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-indigo-500',
-              isStart(date) ? 'bg-indigo-600 text-white' :
-              isEnd(date) ? 'bg-indigo-600 text-white' :
-              isInRange(date) ? 'bg-indigo-300 text-white' :
-              'text-gray-700',
+              'p-2 rounded-md hover:bg-terminal-muted focus:outline-none focus:ring-2 focus:ring-terminal-accent transition-colors duration-200',
+              isStart(date) ? 'bg-terminal-accent text-terminal-bg' :
+              isEnd(date) ? 'bg-terminal-accent text-terminal-bg' :
+              isInRange(date) ? 'bg-terminal-highlight text-terminal-bg' :
+              'text-terminal-text',
               isStart(date) ? 'rounded-l-md' : '',
               isEnd(date) ? 'rounded-r-md' : ''
             )}

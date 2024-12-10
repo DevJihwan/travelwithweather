@@ -3,7 +3,7 @@
 'use client';
 
 import React, { useState, useRef, useEffect } from 'react';
-import Calendar from './Calendar'; // 사용자 정의 Calendar 컴포넌트 경로
+import Calendar from './Calendar';
 import { cn } from '@/lib/utils';
 import { Calendar as CalendarIcon } from 'lucide-react';
 import { DateRange } from '@/components/TravelWeatherPlanner/types';
@@ -25,7 +25,7 @@ const CalendarPicker: React.FC<CalendarPickerProps> = ({ selectedRange, onSelect
   const handleSelectDate = (date: Date) => {
     if (!selectedRange?.start || (selectedRange?.start && selectedRange?.end)) {
       // 새로운 시작일 선택
-      onSelectRange({ start: date }); // end는 선택적으로 설정
+      onSelectRange({ start: date });
     } else if (selectedRange?.start && !selectedRange?.end) {
       // 종료일 선택
       if (date >= selectedRange.start) {
@@ -79,17 +79,17 @@ const CalendarPicker: React.FC<CalendarPickerProps> = ({ selectedRange, onSelect
         ref={toggleRef}
         onClick={handleToggle}
         className={cn(
-          'w-full px-4 py-2 border rounded-md flex items-center justify-between bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500'
+          'w-full px-4 py-2 border border-terminal-muted rounded-md flex items-center justify-between bg-terminal-bg hover:bg-terminal-muted focus:outline-none focus:ring-2 focus:ring-terminal-accent text-terminal-text font-mono transition-colors duration-200'
         )}
       >
         <div className="flex items-center">
-          <CalendarIcon className="mr-2 h-4 w-4 text-gray-500" />
-          <span className="text-gray-700">
+          <CalendarIcon className="mr-2 h-5 w-5 text-terminal-accent" />
+          <span className="text-terminal-text">
             {displayText()}
           </span>
         </div>
         <svg
-          className={`h-5 w-5 transition-transform ${isOpen ? 'transform rotate-180' : ''}`}
+          className={`h-5 w-5 transition-transform duration-300 ${isOpen ? 'rotate-180' : 'rotate-0'} text-terminal-accent`}
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
@@ -98,11 +98,17 @@ const CalendarPicker: React.FC<CalendarPickerProps> = ({ selectedRange, onSelect
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
         </svg>
       </button>
-      {isOpen && (
-        <div ref={calendarRef} className="absolute z-50 mt-2 w-full max-w-xs md:max-w-md bg-white border rounded-md shadow-lg">
-            <Calendar selectedRange={{ start: selectedRange?.start, end: selectedRange?.end }} onSelect={handleSelectDate} />
+      {/* {isOpen && (
+        <div ref={calendarRef} className="absolute z-50 mt-2 w-full max-w-md bg-terminal-bg border border-terminal-muted rounded-md shadow-lg max-h-96 overflow-y-auto transition-all duration-300 ease-in-out">
+          <Calendar selectedRange={{ start: selectedRange?.start, end: selectedRange?.end }} onSelect={handleSelectDate} />
         </div>
+      )} */}
+      {isOpen && (
+        <div ref={calendarRef} className="absolute z-50 mt-2 w-full max-w-md bg-terminal-bg border border-terminal-muted rounded-md shadow-lg max-h-96 overflow-y-auto transition-transform duration-300 ease-in-out">
+        <Calendar selectedRange={{ start: selectedRange?.start, end: selectedRange?.end }} onSelect={handleSelectDate} />
+      </div>
       )}
+
     </div>
   );
 };

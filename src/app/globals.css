@@ -4,4 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* 추가적인 글로벌 스타일 */
+body {
+  @apply bg-terminal-bg text-terminal-text font-mono;
+}

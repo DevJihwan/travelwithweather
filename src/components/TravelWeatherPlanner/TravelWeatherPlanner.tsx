@@ -230,19 +230,19 @@ const TravelWeatherPlanner: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-100 to-indigo-100 p-8">
-      <Card className="w-full max-w-3xl mx-auto bg-white/80 backdrop-blur-sm shadow-xl rounded-xl overflow-hidden">
-        <Card.Header className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white">
+    <div className="min-h-screen bg-terminal-bg p-8 font-mono">
+      <Card className="w-full max-w-3xl mx-auto bg-terminal-bg border border-terminal-muted rounded-xl overflow-visible shadow-lg">
+        <Card.Header className="bg-terminal-muted text-terminal-accent">
           <Card.Title className="text-3xl font-bold">해외여행 날씨 플래너</Card.Title>
-          <Card.Description className="text-blue-100">여행지와 날짜를 입력하세요</Card.Description>
+          <Card.Description className="text-terminal-accent">여행지와 날짜를 입력하세요</Card.Description>
         </Card.Header>
         <Card.Content className="p-6">
           <Tabs defaultValue="my-travel" className="space-y-6">
-            <Tabs.List className="grid w-full grid-cols-2 rounded-lg bg-blue-100 p-1">
-              <Tabs.Trigger value="my-travel" className="rounded-md data-[state=active]:bg-white data-[state=active]:text-blue-600">
+            <Tabs.List className="grid w-full grid-cols-2 rounded-lg bg-terminal-muted p-1">
+              <Tabs.Trigger value="my-travel" className="rounded-md data-[state=active]:bg-terminal-accent data-[state=active]:text-terminal-bg transition-colors duration-200">
                 내 여행지 날씨 알아보기
               </Tabs.Trigger>
-              <Tabs.Trigger value="recommended" className="rounded-md data-[state=active]:bg-white data-[state=active]:text-blue-600">
+              <Tabs.Trigger value="recommended" className="rounded-md data-[state=active]:bg-terminal-accent data-[state=active]:text-terminal-bg transition-colors duration-200">
                 지금 떠나기 좋은 여행지
               </Tabs.Trigger>
             </Tabs.List>
@@ -256,17 +256,17 @@ const TravelWeatherPlanner: React.FC = () => {
                     handleInputChange={handleInputChange} 
                   />
                 ))}
-                <Button type="button" variant="outline" className="w-full" onClick={handleAddStop}>
+                <Button type="button" variant="outline" className="w-full bg-terminal-muted hover:bg-terminal-highlight text-terminal-accent transition-colors duration-200" onClick={handleAddStop}>
                   <PlusCircle className="mr-2 h-4 w-4" /> 여행지 추가
                 </Button>
-                <Button type="submit" className="w-full bg-blue-500 hover:bg-blue-600 text-white" disabled={isLoading}>
+                <Button type="submit" className="w-full bg-terminal-accent hover:bg-terminal-highlight text-terminal-bg transition-colors duration-200" disabled={isLoading}>
                   {isLoading ? '날씨 확인 중...' : '날씨 확인'}
                 </Button>
               </form>
               {overallScore !== null && (
                 <div className="mt-6 space-y-4">
-                  <h3 className="font-semibold text-lg text-gray-800">전체 여행 날씨 점수</h3>
-                  <Card className="bg-gradient-to-r from-blue-400 to-indigo-400 text-white">
+                  <h3 className="font-semibold text-lg text-terminal-accent">전체 여행 날씨 점수</h3>
+                  <Card className="bg-terminal-muted text-terminal-bg">
                     <Card.Content className="flex flex-col items-center justify-center p-6">
                       <WeatherIcon
                         weather={
@@ -274,7 +274,7 @@ const TravelWeatherPlanner: React.FC = () => {
                           overallScore >= 70 ? '흐림' :
                           overallScore >= 50 ? '비' : '눈'
                         }
-                        className="h-16 w-16 text-blue-500"
+                        className="h-16 w-16 text-terminal-accent"
                       />
                       <p className="text-3xl font-bold mt-4">{overallScore}점</p>
                       <p className="text-lg mt-2">
@@ -291,13 +291,13 @@ const TravelWeatherPlanner: React.FC = () => {
                       if (hasCompleteDateRange(stop)) {
                         return (
                           <div key={stopIndex} className="flex items-start space-x-2">
-                            <MapPin className="h-5 w-5 text-blue-500 mt-1" />
+                            <MapPin className="h-5 w-5 text-terminal-accent mt-1" />
                             <div className="flex-grow">
-                              <div className="h-0.5 bg-blue-200"></div>
+                              <div className="h-0.5 bg-terminal-muted"></div>
                             </div>
-                            <Card className="flex-grow bg-white shadow">
+                            <Card className="flex-grow bg-terminal-bg border border-terminal-muted shadow-md">
                               <Card.Header className="pb-2">
-                                <Card.Title className="text-lg text-gray-800">{stop.destination}</Card.Title>
+                                <Card.Title className="text-lg text-terminal-accent">{stop.destination}</Card.Title>
                                 <Card.Description>
                                   {`${format(stop.dateRange.start, "PPP")} - ${format(stop.dateRange.end, "PPP")}`}
                                 </Card.Description>
@@ -306,20 +306,20 @@ const TravelWeatherPlanner: React.FC = () => {
                                 {stop.weatherInfo.length > 0 ? (
                                   // 날짜별로 그룹핑하여 날씨 정보 표시
                                   Object.entries(groupBy(stop.weatherInfo, entry => entry.date)).map(([date, entries], dateIndex) => (
-                                    <div key={dateIndex} className="border-b pb-2">
-                                      <h4 className="font-semibold text-lg text-gray-800">{format(new Date(date), 'PPP')}</h4>
+                                    <div key={dateIndex} className="border-b border-terminal-muted pb-2">
+                                      <h4 className="font-semibold text-lg text-terminal-accent">{format(new Date(date), 'PPP')}</h4>
                                       <div className="flex space-x-4 mt-2">
                                         {entries.map((entry, entryIndex) => (
                                           <div key={entryIndex} className="flex items-center space-x-2">
-                                            {getWeatherIcon(entry.weather, "h-6 w-6")}
-                                            <span className="text-sm text-gray-700">{entry.time}: {entry.weather}</span>
+                                            {getWeatherIcon(entry.weather, "h-6 w-6 text-terminal-accent")}
+                                            <span className="text-sm text-terminal-text">{entry.time}: {entry.weather}</span>
                                           </div>
                                         ))}
                                       </div>
                                     </div>
                                   ))
                                 ) : (
-                                  <p className="text-sm text-gray-500">날씨 정보 없음</p>
+                                  <p className="text-sm text-terminal-muted">날씨 정보 없음</p>
                                 )}
                               </Card.Content>
                             </Card>
@@ -328,13 +328,13 @@ const TravelWeatherPlanner: React.FC = () => {
                       } else {
                         return (
                           <div key={stopIndex} className="flex items-start space-x-2">
-                            <MapPin className="h-5 w-5 text-blue-500 mt-1" />
+                            <MapPin className="h-5 w-5 text-terminal-accent mt-1" />
                             <div className="flex-grow">
-                              <div className="h-0.5 bg-blue-200"></div>
+                              <div className="h-0.5 bg-terminal-muted"></div>
                             </div>
-                            <Card className="flex-grow bg-white shadow">
+                            <Card className="flex-grow bg-terminal-bg border border-terminal-muted shadow-md">
                               <Card.Header className="pb-2">
-                                <Card.Title className="text-lg text-gray-800">{stop.destination}</Card.Title>
+                                <Card.Title className="text-lg text-terminal-accent">{stop.destination}</Card.Title>
                                 <Card.Description>
                                   '날짜 미선택'
                                 </Card.Description>
@@ -343,20 +343,20 @@ const TravelWeatherPlanner: React.FC = () => {
                                 {stop.weatherInfo.length > 0 ? (
                                   // 날짜별로 그룹핑하여 날씨 정보 표시
                                   Object.entries(groupBy(stop.weatherInfo, entry => entry.date)).map(([date, entries], dateIndex) => (
-                                    <div key={dateIndex} className="border-b pb-2">
-                                      <h4 className="font-semibold text-lg text-gray-800">{format(new Date(date), 'PPP')}</h4>
+                                    <div key={dateIndex} className="border-b border-terminal-muted pb-2">
+                                      <h4 className="font-semibold text-lg text-terminal-accent">{format(new Date(date), 'PPP')}</h4>
                                       <div className="flex space-x-4 mt-2">
                                         {entries.map((entry, entryIndex) => (
                                           <div key={entryIndex} className="flex items-center space-x-2">
-                                            {getWeatherIcon(entry.weather, "h-6 w-6")}
-                                            <span className="text-sm text-gray-700">{entry.time}: {entry.weather}</span>
+                                            {getWeatherIcon(entry.weather, "h-6 w-6 text-terminal-accent")}
+                                            <span className="text-sm text-terminal-text">{entry.time}: {entry.weather}</span>
                                           </div>
                                         ))}
                                       </div>
                                     </div>
                                   ))
                                 ) : (
-                                  <p className="text-sm text-gray-500">날씨 정보 없음</p>
+                                  <p className="text-sm text-terminal-muted">날씨 정보 없음</p>
                                 )}
                               </Card.Content>
                             </Card>
@@ -370,7 +370,7 @@ const TravelWeatherPlanner: React.FC = () => {
             </Tabs.Content>
             <Tabs.Content value="recommended">
               <div className="space-y-6">
-                <h3 className="font-semibold text-xl text-gray-800">지금 떠나기 좋은 여행지 TOP 3</h3>
+                <h3 className="font-semibold text-xl text-terminal-accent">지금 떠나기 좋은 여행지 TOP 3</h3>
                 {recommendedDestinations.map((destination, index) => (
                   <RecommendedDestinationCard key={index} destination={destination} />
                 ))}
@@ -378,11 +378,11 @@ const TravelWeatherPlanner: React.FC = () => {
             </Tabs.Content>
           </Tabs>
         </Card.Content>
-        <Card.Footer className="flex justify-between bg-gray-50 p-6">
-          <Button variant="outline" onClick={handleSave} className="bg-white hover:bg-gray-100">
+        <Card.Footer className="flex justify-between bg-terminal-muted p-6">
+          <Button variant="outline" onClick={handleSave} className="bg-terminal-muted hover:bg-terminal-highlight text-terminal-accent transition-colors duration-200">
             <Download className="mr-2 h-4 w-4" /> 저장
           </Button>
-          <Button variant="outline" onClick={handleShare} className="bg-white hover:bg-gray-100">
+          <Button variant="outline" onClick={handleShare} className="bg-terminal-muted hover:bg-terminal-highlight text-terminal-accent transition-colors duration-200">
             <Share2 className="mr-2 h-4 w-4" /> 공유
           </Button>
         </Card.Footer>
@@ -390,23 +390,23 @@ const TravelWeatherPlanner: React.FC = () => {
 
       {/* Dialog 컴포넌트 사용: open과 onOpenChange props 전달 */}
       <Dialog open={showPhotocard} onOpenChange={setShowPhotocard}>
-        <Dialog.Content className="sm:max-w-[425px]">
+        <Dialog.Content className="sm:max-w-[425px] bg-terminal-bg border border-terminal-muted rounded-lg p-6">
           <Dialog.Header>
-            <Dialog.Title className="text-2xl font-bold text-gray-800">내 여행 날씨 점수</Dialog.Title>
+            <Dialog.Title className="text-2xl font-bold text-terminal-accent">내 여행 날씨 점수</Dialog.Title>
           </Dialog.Header>
-          <div ref={photocardRef} className="bg-gradient-to-r from-blue-400 to-indigo-500 p-6 rounded-lg shadow-lg">
-            <div className="bg-white rounded-lg p-6 space-y-4">
-              <h2 className="text-2xl font-bold text-center text-gray-800">내 여행 날씨 점수는</h2>
+          <div ref={photocardRef} className="bg-terminal-muted rounded-lg p-6 shadow-lg">
+            <div className="bg-terminal-bg rounded-lg p-6 space-y-4">
+              <h2 className="text-2xl font-bold text-center text-terminal-accent">내 여행 날씨 점수는</h2>
               <div className="flex justify-center items-center space-x-4">
                 {overallScore !== null && getWeatherIcon(
                   overallScore >= 90 ? '맑음' :
                   overallScore >= 70 ? '흐림' :
                   overallScore >= 50 ? '비' : '눈',
-                  "h-16 w-16 text-blue-500"
+                  "h-16 w-16 text-terminal-accent"
                 )}
-                <span className="text-5xl font-bold text-blue-600">{overallScore}점</span>
+                <span className="text-5xl font-bold text-terminal-accent">{overallScore}점</span>
               </div>
-              <p className="text-center text-lg text-gray-600">
+              <p className="text-center text-lg text-terminal-text">
                 {overallScore !== null && (
                   overallScore >= 90 ? '완벽한 날씨예요!' :
                   overallScore >= 70 ? '좋은 날씨네요.' :
@@ -415,7 +415,7 @@ const TravelWeatherPlanner: React.FC = () => {
                   '실내 활동을 추천해요.'
                 )}
               </p>
-              <div className="text-center text-sm text-gray-500">
+              <div className="text-center text-sm text-terminal-muted">
                 {travelStops.map((stop, index) => (
                   <div key={index}>
                     {stop.destination} - {formatDateRange(stop.dateRange)}
@@ -425,7 +425,7 @@ const TravelWeatherPlanner: React.FC = () => {
             </div>
           </div>
           <div className="flex justify-center mt-4">
-            <Button onClick={saveAsImage} className="bg-blue-500 hover:bg-blue-600 text-white">
+            <Button onClick={saveAsImage} className="bg-terminal-accent hover:bg-terminal-highlight text-terminal-bg transition-colors duration-200">
               이미지로 저장
             </Button>
           </div>
